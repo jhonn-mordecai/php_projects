@@ -133,16 +133,17 @@ if (isset($_FILES) && (isset($_FILES['upload1']) || isset($_FILES['upload2']) ||
 	
 		<!-- font-family: 'Roboto', sans-serif; -->
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300,500' rel='stylesheet' type='text/css'>
-	
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">	
+
 		<style type="text/css">
 			body {margin:0; padding:0; background-color:#eeeeee;font-family:'Roboto',Helvetica,Arial,sans-serif;}
 			div.container {width:400px;margin:0 auto; margin-top:10rem;}
-			h1 {color:#212121;text-transform:uppercase; font-size:1.5rem;text-align:center;margin-bottom:3rem;}
+			h1 {color:#212121;text-transform:uppercase; font-size:2rem;text-align:center;margin-bottom:3rem;}
 			h2 {color:red;text-transform:uppercase;font-size:1rem;}
 			ul {text-align:center;margin:0; padding:0;list-style-type:none;}
 			ul li {margin-bottom:1rem;}
-			legend {font-weight:700; font-size:1.3rem;}
-			fieldset {padding:2rem 0 1.5rem 1rem; margin-bottom:2.5rem;}
+			legend {font-weight:700; font-size:1.3rem; border-bottom-color: #cccccc; color:#eeeeee;}
+			fieldset {margin-bottom:2.5rem;}
 			p {color:#212121; margin-top:1rem;}
 			p.confirm {color:red;}
 			input {padding:0.3rem 1rem;}
@@ -160,11 +161,12 @@ if (isset($_FILES) && (isset($_FILES['upload1']) || isset($_FILES['upload2']) ||
 				foreach ($saved_files as $key => $value) {
 					$filetype = pathinfo($value['name'], PATHINFO_EXTENSION);
 					$isimg = in_array($filetype, array('png', 'jpg', 'jpeg')) ? true : false;
-					echo '<p><a href="/'.$value['name']. '" target="_blank" title=" ' .$value['name'].'">'.($isimg ? '<img src="/' .$value['name'].'" height="40px" width="40px" />' : $value['name']). '</a></p>';
+					echo '<p><a href="/php_projects/'.$value['name']. '" target="_blank" title=" ' .$value['name'].'">'.($isimg ? '<img src="/php_projects/' .$value['name'].'" height="40px" width="40px" />' : $value['name']). '</a></p>';
 				}
 			}
 			?>
-			<h1>PHP Uploads</h1>
+			<h1>File Uploads</h1>
+			<p>Upload up to three files. Files must be either gif, png, jpeg, or docx format, and no larger than 100mb.</p>
 			<form action="php_uploads.php" method="POST" enctype="multipart/form-data">
 				<fieldset>
 					<legend>Profile Update</legend>
@@ -180,7 +182,7 @@ if (isset($_FILES) && (isset($_FILES['upload1']) || isset($_FILES['upload2']) ||
 					<input type="file" name="upload3" id="upload3" /><br /><br />
 					<?php echo isset($errors['upload3']) ? '<p style="color:red">'.current($errors['upload3']).'</p><br />' : ''; ?>
 					
-					<button type="submit">Submit</button>
+					<button class="btn btn-primary btn-block" type="submit">Submit</button>
 				</fieldset>
 			</form>
 		</div>
