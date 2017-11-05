@@ -111,18 +111,22 @@
 		
 		<title>Interplanetary Travel Registration</title>
 		
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">	
+
 		<style type="text/css">
-			html {margin:0; padding:0; background-color:#eeeeee; font-family:'Roboto',Helvetica,Arial,sans-serif;}
-			#container {width:98%; min-width:480px; max-width:1000px; margin:0 auto;}
+			html {font-family:'Roboto',Helvetica,Arial,sans-serif;}
+			body {background-color:#eeeeee;}
+			#container {width:98%; min-width:480px; max-width:1000px; margin:0 auto; margin-bottom:50px;}
 			#intro {text-align:center; text-transform:uppercase;}
-			legend {font-weight:700; text-transform:uppercase;}
+			legend {font-weight:700; font-size:1.8rem; text-transform:uppercase;border-bottom-color:#cccccc;}
+			label {font-weight:normal;}
 			input {padding:0.4rem; border:1px solid #cccccc; border-radius:2px;}
 			textarea {padding:0.5rem; border:1px solid #cccccc; border-radius:2px;}
 			span.italic {font-style:italic;}
-			.finePrint {font-size:0.8rem;}
+			.finePrint {font-size:1rem;}
 			button {padding:0.7rem;cursor: pointer;}
-			.buttonDiv {margin:0 auto; width:60px; text-align:center;}
-			.error {color:#be1e2d; font-weight:700}
+			.buttonDiv {margin:0 auto; width:250px; text-align:center;}
+			.error {color:#be1e2d; font-weight:700;}
 			.outlierBox {width:98%; min-width:480px; max-width:500px; border:2px solid #be1e2d; padding:1.2rem; margin:0 auto;}
 		</style>
 		
@@ -196,53 +200,58 @@
 				<fieldset>
 					
 					<legend>Basic Info</legend>
-					<label for="name">Full Name</label>
-					<input type="text" id="name" name="name" tabindex="1" value="<?php echo htmlspecialchars($name, ENT_QUOTES); ?>" />
-						<?php
-							if (isset($errors['name']))	{									 
-								echo '<p class="error">'.htmlspecialchars($errors['name'],ENT_QUOTES).'</p>';
-							}					
-						?>
-						
-						
-					<label for="origin">Country of Origin</label>
-					<input type="text" id="origin" name="origin" tabindex="2" value="<?php echo htmlspecialchars($origin, ENT_QUOTES); ?>" />
-						<?php
-							if (isset($errors['origin'])) {									 
-								echo '<p class="error">'.$errors['origin'].'</p>';
-							}						
-						?>
-					<br /><br />
+					<div class="row">
+						<div class="col-sm-6">
+							<label for="name">Full Name</label>
+							<input class="form-control" type="text" id="name" name="name" tabindex="1" value="<?php echo htmlspecialchars($name, ENT_QUOTES); ?>" />
+								<?php
+									if (isset($errors['name']))	{									 
+										echo '<p class="error">'.htmlspecialchars($errors['name'],ENT_QUOTES).'</p>';
+									}					
+								?>
+						</div>
+						<div class="col-sm-6">
+							<label for="dob">Date of Birth</label>
+							<input class="form-control" type="text" name="dob" maxlength="10" placeholder="MM/DD/YYYY" tabindex="3" value="<?php echo htmlspecialchars($dob, ENT_QUOTES);?>" />
+								<?php
+									if (isset($errors['dob'])) {								 
+										echo '<p class="error">'.$errors['dob'].'</p>';
+									}
+								?>
+						</div>
+					</div>	
+					<br>
+					<div class="row" style="margin-bottom:25px;">
+						<div class="col-sm-6">
+							<label for="origin">Country of Origin</label>
+							<input class="form-control" type="text" id="origin" name="origin" tabindex="2" value="<?php echo htmlspecialchars($origin, ENT_QUOTES); ?>" />
+							<?php
+								if (isset($errors['origin'])) {									 
+									echo '<p class="error">'.$errors['origin'].'</p>';
+								}						
+							?>
+						</div>
+						<div class="col-sm-6" style="padding-top:30px;">
+							<label for="sex">Sex</label>
+							<?php
+								$i=1; 
+								foreach($sex_options as $key => $value) {
+									echo '<label for="sex'.$i.'">&nbsp;<input type="radio" name="sex" tabindex="4" id="sex"' .$i. '"value="' .$key. '"'.(in_array($key, $sex_options) ? ' checked="checked" ' : ''). '/>&nbsp;' .htmlspecialchars($value, ENT_QUOTES). '</label>&nbsp;&nbsp;';
+									$i++;
+								}
+							?>
+							
+							<?php
+								if (isset($errors['sex'])) {							 
+									echo '<p class="error">'.$errors['sex'].'</p>';	
+								}						
+							?>
+						</div>
+					</div>					
 					
-					<label for="dob">Date of Birth</label>
-					<input type="text" name="dob" maxlength="10" placeholder="MM/DD/YYYY" tabindex="3" value="<?php echo htmlspecialchars($dob, ENT_QUOTES);?>" />
-						<?php
-							if (isset($errors['dob'])) {								 
-								echo '<p class="error">'.$errors['dob'].'</p>';
-							}
-						?>
-					
-					<label for="sex">Sex</label>
-					
-					<?php
-						$i=1; 
-						foreach($sex_options as $key => $value) {
-							echo '<label for="sex'.$i.'"><input type="radio" name="sex" tabindex="4" id="sex"' .$i. '"value="' .$key. '"'.(in_array($key, $sex_options) ? ' checked="checked" ' : ''). '/>' .htmlspecialchars($value, ENT_QUOTES). '</label>';
-							$i++;
-						}
-					?>
-					
-					<?php
-						if (isset($errors['sex'])) {							 
-							echo '<p class="error">'.$errors['sex'].'</p>';	
-						}						
-					?>
-					
-					<br /><br />
-					
-					<legend>Desination</legend>
+					<legend>Destination</legend>
 					<label for="destination">Destination</label>
-					<select name="destination" id="destination" tabindex="5">
+					<select class="form-control" name="destination" id="destination" tabindex="5">
 						<option>--Please Select a Destination--</option>
 						<?php 
 							foreach($destination_options as $key => $value) 
@@ -263,7 +272,7 @@
 						<?php
 							$i=1; 
 							foreach($trip_options as $key => $value) {
-								echo '<label for="trip'.$i.'"><input type="radio" name="trip" tabindex="6" id="trip'.$i.'" value="' .$key. '"'.(in_array($key, $trip_options) ? ' checked="checked" ' : ''). '/>'.htmlspecialchars($value, ENT_QUOTES). '</label>';
+								echo '<label for="trip'.$i.'">&nbsp;<input type="radio" name="trip" tabindex="6" id="trip'.$i.'" value="' .$key. '"'.(in_array($key, $trip_options) ? ' checked="checked" ' : ''). '/>&nbsp;'.htmlspecialchars($value, ENT_QUOTES). '</label>&nbsp;&nbsp;';
 								$i++;
 							}
 						?>
@@ -277,7 +286,7 @@
 					<br /><br />
 					<label for="purpose">Primary Reason for Traveling</label>
 					<br />
-					<textarea rows="10" cols="50" id="purpose" name="purpose" tabindex="7" <?php echo htmlspecialchars($purpose, ENT_QUOTES); ?> ></textarea>
+					<textarea rows="10" cols="50" id="purpose" class="form-control" name="purpose" tabindex="7" <?php echo htmlspecialchars($purpose, ENT_QUOTES); ?> ></textarea>
 						<?php
 							if (isset($errors['purpose'])) 	{								 
 								echo '<p class="error">'.$errors['purpose'].'</p>';	
@@ -291,7 +300,7 @@
 						<?php
 							$i=1; 
 							foreach($arrest_options as $key => $value) {
-								echo '<label for="arrest'.$i.'"><input type="radio" name="arrest" tabindex="8" id="arrest'.$i.'" value="' .$key. '"'.(in_array($key, $arrest_options) ? ' checked="checked" ' : ''). '/>'.htmlspecialchars($value, ENT_QUOTES). '</label>';
+								echo '<label for="arrest'.$i.'">&nbsp;<input type="radio" name="arrest" tabindex="8" id="arrest'.$i.'" value="' .$key. '"'.(in_array($key, $arrest_options) ? ' checked="checked" ' : ''). '/>&nbsp;'.htmlspecialchars($value, ENT_QUOTES). '</label>&nbsp;&nbsp;';
 								$i++;
 							}
 						?>
@@ -301,22 +310,22 @@
 								echo '<p class="error">'.$errors['arrest'].'</p>';
 							}							
 						?>
-					<br />
+					<br>
 					
 					<label for="arrest_reason">If yes, why?</label>
-					<input type="text" name="arrest_reason" tabindex="9" value="<?php echo htmlspecialchars($arrest_reason, ENT_QUOTES); ?>" />
+					<input class="form-control" type="text" name="arrest_reason" tabindex="9" value="<?php echo htmlspecialchars($arrest_reason, ENT_QUOTES); ?>" />
 						<?php
 							if (isset($errors['arrest_reason'])) {								 
 								echo '<p class="error">'.$errors['arrest_reason'].'</p>';		
 							}					
 						?>
-					<br /><br />
+					<br>
 					<label for="terrorist">Are you a terrorist?</label>
 					
 						<?php
 							$i=1; 
 							foreach($terrorist_options as $key => $value) {
-								echo '<label for="terrorist'.$i.'"><input type="radio" name="terrorist" tabindex="10" id="terrorist'.$i.'" value="' .$key. '"'.(in_array($key, $terrorist_options) ? ' checked="checked" ' : ''). '/>'.htmlspecialchars($value, ENT_QUOTES). '</label>';
+								echo '<label for="terrorist'.$i.'">&nbsp;<input type="radio" name="terrorist" tabindex="10" id="terrorist'.$i.'" value="' .$key. '"'.(in_array($key, $terrorist_options) ? ' checked="checked" ' : ''). '/>&nbsp;'.htmlspecialchars($value, ENT_QUOTES). '</label>&nbsp;&nbsp;';
 								$i++;
 							}
 							
@@ -325,7 +334,7 @@
 							}
 						?>
 
-					<br /><br />
+					<br><br>
 					
 					<!-- FEARS CHECKBOXES -->
 					
@@ -334,7 +343,7 @@
 						<?php
 							$i=1; 
 							foreach($fears_options as $key => $value) {
-								echo '<label for="fears'.$i.'"><input type="checkbox" name="fears[]" tabindex="11" id="fears'.$i.'" value="' .$key. '"'.(in_array($key, $fears_options) ? ' checked="checked" ' : ''). '/>'.htmlspecialchars($value, ENT_QUOTES). '</label>';
+								echo '<label for="fears'.$i.'">&nbsp;<input type="checkbox" name="fears[]" tabindex="11" id="fears'.$i.'" value="' .$key. '"'.(in_array($key, $fears_options) ? ' checked="checked" ' : ''). '/>&nbsp;'.htmlspecialchars($value, ENT_QUOTES). '</label>&nbsp;&nbsp;';
 								$i++;
 							}
 
@@ -352,7 +361,7 @@
 						<?php
 							$i=1; 
 							foreach($insurance_options as $key => $value) {
-								echo '<label for="insurance'.$i.'"><input type="radio" name="insurance" tabindex="12" id="insurance'.$i.'" value="' .$key. '"'.(in_array($key, $trip_options) ? ' checked="checked" ' : ''). '/>'.htmlspecialchars($value, ENT_QUOTES). '</label>';
+								echo '<label for="insurance'.$i.'">&nbsp;<input type="radio" name="insurance" tabindex="12" id="insurance'.$i.'" value="' .$key. '"'.(in_array($key, $trip_options) ? ' checked="checked" ' : ''). '/>&nbsp;'.htmlspecialchars($value, ENT_QUOTES). '</label>&nbsp;&nbsp;';
 								$i++;
 							}
 							
@@ -366,7 +375,7 @@
 					<!-- FINAL SUBMIT SECTION -->
 					
 					<legend>Terms and Conditions</legend>
-					<label for="terms"><input type="checkbox" id="terms" name="terms" value="terms" tabindex="24">I agree to the <a href="#" id='conditions'  title="Terms and Conditions">terms and conditions</a> set by PlanetCo.</label>
+					<label for="terms"><input type="checkbox" id="terms" name="terms" value="terms" tabindex="24"></label>&nbsp;&nbsp;I agree to the <a href="#" data-toggle="modal" data-target="#terms_modal" title="Terms and Conditions">terms and conditions</a> set by PlanetCo.
 						<?php
 							if (isset($errors['terms'])) {					 
 								echo '<p class="error">'.$errors['terms'].'</p>';	
@@ -375,19 +384,34 @@
 					<br /><br />
 					
 					<div class="buttonDiv">
-						<button type="submit" id="submit" tabindex="25">APPLY</button>
+						<button class="btn btn-block btn-primary" type="submit" id="submit" tabindex="25">APPLY</button>
 					</div>
 					
 				</fieldset>
 			</form>
 		
 		</div>
-		
-		<script type="text/javascript">
-			document.getElementById('conditions').onclick=function(){
-				alert("TERMS & CONDITIONS: It's space, dude. We're gonna do our best, but you travel at your own risk. It's like, how the hell can we do anything about aliens, right?");
-			}
-		</script>
+	
+		<!-- Modal -->
+		<div id="terms_modal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Terms & Conditions</h4>
+					</div>
+					<div class="modal-body">
+						<p>It's space, dude. We're gonna do our best, but you travel at your own risk. It's like, how the hell can we do anything about aliens, right?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 		
 	</body>
 </html>
