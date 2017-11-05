@@ -86,16 +86,16 @@
 	
 		<!-- font-family: 'Roboto', sans-serif; -->
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300,500' rel='stylesheet' type='text/css'>
-	
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">	
 		<style type="text/css">
 			body {margin:0; padding:0; background-color:#eeeeee;font-family:'Roboto',Helvetica,Arial,sans-serif;}
-			div.container {width:400px;margin:0 auto; margin-top:10rem;}
-			h1 {color:#212121;text-transform:uppercase; font-size:1.5rem;text-align:center;margin-bottom:3rem;}
+			div.container {width:350px;margin:0 auto; margin-top:10rem;}
+			h1 {color:#212121;text-transform:uppercase; font-size:2rem;text-align:center;margin-bottom:3rem;border-top:1px solid #cccccc;padding-top:15px;}
 			h2 {color:red;text-transform:uppercase;font-size:1rem;}
 			ul {text-align:center;margin:0; padding:0;list-style-type:none;}
 			ul li {margin-bottom:1rem;}
-			legend {font-weight:700; font-size:1.3rem;}
-			fieldset {padding:2rem 0 1.5rem 1rem; margin-bottom:2.5rem;}
+			legend {font-weight:700; font-size:1.3rem; border-bottom-color: #cccccc;}
+			fieldset {margin-bottom:2.5rem;}
 			p {color:#212121; margin-top:1rem;}
 			input {padding:0.3rem 0.3rem;}
 			input, select {margin-bottom:1rem;}
@@ -113,16 +113,16 @@
 				<legend>Enter Username</legend>
 				<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 					<fieldset>
-					<label for="username">Username:</label>
-					<input type="text" id="username" name="username" value="<?php echo htmlspecialchars($name, ENT_QUOTES); ?>" />
+					<label for="username">User Name:</label>
+					<input class="form-control" type="text" id="username" name="username" value="<?php echo htmlspecialchars($name, ENT_QUOTES); ?>" />
 					<?php 
 						if (isset($errors['username']))
 							echo "<p class='error'>".$errors['username']."</p>";
 					?>
-					<button type="submit">Submit</button>
+					<button class="btn btn-block btn-primary" type="submit">Submit</button>
 					</fieldset>
 				</form>
-			
+			<hr>
 			<h1>Current Users</h1>
 			<ul>
 				
