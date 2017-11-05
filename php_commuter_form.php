@@ -57,18 +57,18 @@ if (isset($_GET['name']) && isset($_GET['transit']) && isset($_GET['distance']))
 		
 		<!-- font-family: 'Roboto', sans-serif; -->
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300,500' rel='stylesheet' type='text/css'>
-		
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">	
+
 		<style type="text/css">
 			body {margin:0; padding:0; background-color:#eeeeee;font-family:'Roboto',Helvetica,Arial,sans-serif;}
 			div.container {width:400px;margin:0 auto; margin-top:10rem;}
-			h1 {color:#212121;text-transform:uppercase; font-size:1.5rem;}
+			h1 {color:#212121;text-transform:uppercase; font-size:1.8rem;border-bottom:1px solid #cccccc;padding-bottom:10px;}
 			h2 {color:#212121;}
 			legend {font-weight:700; font-size:1.3rem;}
-			fieldset {padding:2.4rem 0 2.2rem 1rem;}
 			p {color:#212121; margin-top:2rem; font-size:1.1rem;}
+			p.error, p.ouch {color:#be1e2d; font-weight:700;}
 			p.ouch {font-weight:700; font-size:1.1rem;}
 			input {padding:0.3rem 0.3rem;}
-			input, select {margin-bottom:1rem;}
 		</style>
 		
 	</head>
@@ -80,14 +80,14 @@ if (isset($_GET['name']) && isset($_GET['transit']) && isset($_GET['distance']))
 			<form action="php_commuter_form.php" method="GET">
 				<fieldset>
 					<label for="name">Name</label>
-					<input type="text" name="name" id="name" value="<?php echo htmlspecialchars($name, ENT_QUOTES); ?>" />
+					<input class="form-control" type="text" name="name" id="name" value="<?php echo htmlspecialchars($name, ENT_QUOTES); ?>" />
 					<?php
 					if (isset($errors['name']))										 
 						echo '<p class="error">'.$errors['name'].'</p>';
 					?>
 					<br />
 					<label for="transit">Transit Option</label>
-					<select name="transit" id="transit">
+					<select class="form-control" name="transit" id="transit">
 						<?php
 							foreach ($transit_options as $key => $value)
 								echo '<option value="'.$key.'"'.($key == $transit ? ' selected="selected"' : '').'>'.htmlspecialchars($value, ENT_QUOTES).'</option>';
@@ -99,46 +99,46 @@ if (isset($_GET['name']) && isset($_GET['transit']) && isset($_GET['distance']))
 					?>
 					<br />
 					<label for="distance">Commute Distance</label>
-					<select name="distance" id="distance">
+					<select class="form-control" name="distance" id="distance">
 						<?php 
 							foreach ($commute_distance as $key => $value)
 								echo '<option value="'.$key.'"'.($key == $distance ? ' selected="selected"' : '').'>'.htmlspecialchars($value, ENT_QUOTES).'</option>';
 						?>
 					</select>
 					<br />
-					<button type="submit">Submit</button>
+					<button class="btn btn-primary btn-block" type="submit">Submit</button>
 				</fieldset>
 			</form>
 			
 			<?php
 
-		if ($success) {
-			
-			switch ($transit) {
-				case 'walk':
-					echo '<p>Great! Awesome exercise.</p>';
-					break;
-				case 'bike':
-					echo '<p>Cool! Don\'t get hit by a car.</p>';
-					break;
-				case 'public transit':
-					echo '<p>Sweet! Strangers and people-watching.</p>';
-					break;
-				case 'drive':
-					echo '<p>You are the cause of man made climate change, thanks a lot.</p>';
-					break;					
-			}
-			
-			if ($distance == 2) 
-				echo '<p class="ouch">Sounds like a long trip though. I\'m so sorry '.htmlspecialchars($name, ENT_QUOTES).'!</h2>';
-		    else 
-				echo '<h2>Thanks for submitting '.htmlspecialchars($name, ENT_QUOTES).'!</h2>';
-			
-			echo '<hr />';
-			list($name, $transit, $distance) = array(null, null, null); // Clear form values
-		}
-
-		?>
+				if ($success) {
+					
+					switch ($transit) {
+						case 'walk':
+							echo '<p>Great! Awesome exercise.</p>';
+							break;
+						case 'bike':
+							echo '<p>Cool! Don\'t get hit by a car.</p>';
+							break;
+						case 'public transit':
+							echo '<p>Sweet! Strangers and people-watching.</p>';
+							break;
+						case 'drive':
+							echo '<p>You are the cause of man made climate change, thanks a lot.</p>';
+							break;					
+					}
+					
+					if ($distance == 2) 
+						echo '<p class="ouch">Sounds like a long trip though. I\'m so sorry '.htmlspecialchars($name, ENT_QUOTES).'!</h2>';
+				    else 
+						echo '<h2>Thanks for submitting '.htmlspecialchars($name, ENT_QUOTES).'!</h2>';
+					
+					echo '<hr />';
+					list($name, $transit, $distance) = array(null, null, null); // Clear form values
+				}
+	
+			?>
 			
 		</div>
 	</body>
